@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivir Heritage — Designer Outreach Map</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f0f0f;color:#e0e0e0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 16px}
+  h1{font-size:22px;font-weight:600;letter-spacing:-.3px;margin-bottom:4px;color:#fff}
+  .subtitle{font-size:14px;color:#888;margin-bottom:24px}
+  #map-container{width:100%;max-width:780px;position:relative}
+  .state{stroke:#333;stroke-width:.5;transition:all .15s}
+  .state:hover{stroke:#fff;stroke-width:1.2}
+  .state-active{cursor:pointer}
+  .state-active:hover{filter:brightness(1.15)}
+  #tooltip{position:absolute;pointer-events:none;background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:12px 16px;font-size:13px;color:#e0e0e0;display:none;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,0.5);max-width:280px}
+  #tooltip .tt-state{font-weight:600;font-size:15px;color:#5DCAA5;margin-bottom:4px}
+  #tooltip .tt-count{color:#aaa;margin-bottom:6px}
+  #tooltip .tt-names{font-size:12px;color:#777;line-height:1.5}
+  .legend{display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;color:#888;margin-top:16px;align-items:center;width:100%;max-width:780px}
+  .legend-dot{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .legend-item{display:flex;align-items:center;gap:7px}
+  .stats{margin-left:auto;font-weight:600;color:#5DCAA5;font-size:14px}
+  .summary-cards{display:flex;gap:16px;margin-top:24px;width:100%;max-width:780px;flex-wrap:wrap}
+  .card{flex:1;min-width:140px;background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:16px;text-align:center}
+  .card-number{font-size:28px;font-weight:700;color:#5DCAA5}
+  .card-label{font-size:12px;color:#666;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+  .top-states{margin-top:24px;width:100%;max-width:780px}
+  .top-states h2{font-size:16px;font-weight:600;margin-bottom:12px;color:#ccc}
+  .state-bar{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:13px}
+  .state-bar-label{width:28px;font-weight:600;color:#5DCAA5}
+  .state-bar-track{flex:1;height:24px;background:#1a1a1a;border-radius:6px;overflow:hidden;position:relative}
+  .state-bar-fill{height:100%;background:linear-gradient(90deg,#1D9E75,#5DCAA5);border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#000;min-width:fit-content}
+  .vivir-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;padding:6px 14px;background:#1a1a1a;border:1px solid #262626;border-radius:20px;font-size:12px;color:#5DCAA5;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+  @media(max-width:600px){.summary-cards{flex-direction:column}.stats{margin-left:0;margin-top:8px}}
+</style>
+</head>
+<body>
+<div class="vivir-badge">Vivir Heritage</div>
+<h1>Designer outreach map</h1>
+<p class="subtitle">Flooring launch — target designers by state</p>
+
+<div id="map-container">
+  <svg id="map" width="100%" viewBox="0 0 780 500"></svg>
+  <div id="tooltip"></div>
+</div>
+
+<div class="legend">
+  <span class="legend-item"><span class="legend-dot" style="background:#5DCAA5"></span> Represented</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#1e1e1e;border:1px solid #333"></span> No coverage</span>
+  <span class="stats" id="total-stats"></span>
+</div>
+
+<div class="summary-cards">
+  <div class="card"><div class="card-number">36</div><div class="card-label">Designers</div></div>
+  <div class="card"><div class="card-number">15</div><div class="card-label">States</div></div>
+  <div class="card"><div class="card-number">4.19M</div><div class="card-label">Total followers</div></div>
+  <div class="card"><div class="card-number">116K</div><div class="card-label">Avg per designer</div></div>
+</div>
+
+<div class="top-states">
+  <h2>Top states by follower reach</h2>
+  <div id="bars"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const stateData={
+  CA:{designers:7,followers:647300,names:["Morgan Mullen","Sarah Solis","Brooke Wagner","Ashley Ausland Interiors","Nicole Green Design House","Plaster And Patina","Jennifer Miller Studio"]},
+  CT:{designers:1,followers:109000,names:["Becca Interiors"]},
+  DC:{designers:1,followers:67800,names:["Liz Mearns Interior Design"]},
+  FL:{designers:2,followers:36000,names:["West Bay Homes","Ashley Martin Home"]},
+  IA:{designers:1,followers:152000,names:["Black Birch Homes"]},
+  IL:{designers:3,followers:876700,names:["Park and Oak","Kate Marker Interiors","Corey Lohmann Design"]},
+  IN:{designers:2,followers:48297,names:["Stephanie Wiott Design","Of Place Studio"]},
+  MD:{designers:1,followers:53500,names:["Laura Hodges Studio"]},
+  MI:{designers:2,followers:544188,names:["Jean Stoffer Design","Anahi Hollis Design"]},
+  MN:{designers:2,followers:71200,names:["Oho Interiors","Henri Interiors"]},
+  OK:{designers:1,followers:291000,names:["Kelsey Leigh Design"]},
+  SC:{designers:1,followers:33600,names:["Basic Projects"]},
+  TN:{designers:2,followers:210600,names:["Samantha Stein Interiors","Sean Anderson Design"]},
+  TX:{designers:2,followers:85182,names:["Kara Childress","CBG Interiors"]},
+  UT:{designers:7,followers:949700,names:["Kimberly Parker Design","Steve Tiek Architects","W Design Collective","Andrea West Design","Killowen Construction","Split Rock Custom Homes","House West Design"]}
+};
+
+const stateNames={AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"};
+
+const fipsToState={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+
+const maxFollowers=Math.max(...Object.values(stateData).map(d=>d.followers));
+const w=780,h=500;
+const svg=d3.select('#map');
+const tip=document.getElementById('tooltip');
+const projection=d3.geoAlbersUsa().scale(1000).translate([w/2,h/2]);
+const path=d3.geoPath().projection(projection);
+
+function followerColor(f){
+  const t=f/maxFollowers;
+  if(t>.7)return '#1D9E75';
+  if(t>.4)return '#3DAF8A';
+  if(t>.15)return '#5DCAA5';
+  return '#85D8BA';
+}
+
+d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us=>{
+  const states=topojson.feature(us,us.objects.states).features;
+  svg.selectAll('.state').data(states).enter().append('path')
+    .attr('class',d=>{const ab=fipsToState[d.id];return 'state'+(stateData[ab]?' state-active':'')})
+    .attr('d',path)
+    .attr('fill',d=>{const ab=fipsToState[d.id];return stateData[ab]?followerColor(stateData[ab].followers):'#1e1e1e'})
+    .on('mouseenter',(e,d)=>{
+      const ab=fipsToState[d.id];
+      if(!stateData[ab])return;
+      const s=stateData[ab];
+      tip.innerHTML=`<div class="tt-state">${stateNames[ab]||ab}</div><div class="tt-count">${s.designers} designer${s.designers>1?'s':''} · ${s.followers.toLocaleString()} followers</div><div class="tt-names">${s.names.join(', ')}</div>`;
+      tip.style.display='block';
+    })
+    .on('mousemove',e=>{
+      const rect=document.getElementById('map-container').getBoundingClientRect();
+      let left=e.clientX-rect.left+14;
+      let top=e.clientY-rect.top-10;
+      if(left+260>rect.width)left=e.clientX-rect.left-270;
+      tip.style.left=left+'px';
+      tip.style.top=top+'px';
+    })
+    .on('mouseleave',()=>{tip.style.display='none'});
+
+  svg.append('path')
+    .datum(topojson.mesh(us,us.objects.states,(a,b)=>a!==b))
+    .attr('fill','none').attr('stroke','#333').attr('stroke-width',0.5).attr('d',path);
+});
+
+const sorted=Object.entries(stateData).sort((a,b)=>b[1].followers-a[1].followers);
+const barsEl=document.getElementById('bars');
+sorted.forEach(([ab,d])=>{
+  const pct=(d.followers/maxFollowers*100).toFixed(0);
+  barsEl.innerHTML+=`<div class="state-bar"><span class="state-bar-label">${ab}</span><div class="state-bar-track"><div class="state-bar-fill" style="width:${pct}%">${d.followers.toLocaleString()} · ${d.designers} designer${d.designers>1?'s':''}</div></div></div>`;
+});
+
+document.getElementById('total-stats').textContent='36 designers · 15 states · 4.19M followers';
+</script>
+</body>
+</html>
