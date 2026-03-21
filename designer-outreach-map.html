@@ -10,53 +10,73 @@
   h1{font-size:22px;font-weight:600;letter-spacing:-.3px;margin-bottom:4px;color:#fff}
   .subtitle{font-size:14px;color:#888;margin-bottom:24px}
   #map-container{width:100%;max-width:780px;position:relative}
-  .state{stroke:#333;stroke-width:.5;transition:all .15s}
+  .state{stroke:#333;stroke-width:.5;transition:all .4s}
   .state:hover{stroke:#fff;stroke-width:1.2}
   .state-active{cursor:pointer}
-  .state-active:hover{filter:brightness(1.15)}
-  #tooltip{position:absolute;pointer-events:none;background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:12px 16px;font-size:13px;color:#e0e0e0;display:none;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,0.5);max-width:280px}
-  #tooltip .tt-state{font-weight:600;font-size:15px;color:#5DCAA5;margin-bottom:4px}
+  #tooltip{position:absolute;pointer-events:none;background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:12px 16px;font-size:13px;color:#e0e0e0;display:none;z-index:10;box-shadow:0 4px 20px rgba(0,0,0,0.5);max-width:300px}
+  #tooltip .tt-state{font-weight:600;font-size:15px;margin-bottom:4px}
+  #tooltip .tt-designer{color:#5DCAA5;font-weight:500;margin-bottom:2px}
   #tooltip .tt-count{color:#aaa;margin-bottom:6px}
+  #tooltip .tt-pop{color:#C4A6E8;font-size:12px;margin-bottom:6px}
   #tooltip .tt-names{font-size:12px;color:#777;line-height:1.5}
-  .legend{display:flex;flex-wrap:wrap;gap:12px 28px;font-size:13px;color:#888;margin-top:16px;align-items:center;width:100%;max-width:780px}
+  #tooltip .tt-gap{color:#E87C6A;font-weight:500;font-size:13px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px 32px;font-size:13px;color:#888;margin-top:16px;align-items:flex-start;width:100%;max-width:780px}
+  .legend-section{display:flex;flex-direction:column;gap:6px}
+  .legend-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#555;font-weight:600}
+  .legend-row{display:flex;align-items:center;gap:7px}
   .legend-dot{width:14px;height:14px;border-radius:4px;display:inline-block}
-  .legend-item{display:flex;align-items:center;gap:7px}
-  .stats{margin-left:auto;font-weight:600;color:#5DCAA5;font-size:14px}
+  .legend-circle{width:14px;height:14px;border-radius:50%;display:inline-block}
+  .legend-gradient{width:120px;height:14px;border-radius:4px;display:inline-block}
+  .stats{margin-left:auto;font-weight:600;color:#5DCAA5;font-size:14px;align-self:center}
+  .toggle-bar{display:flex;gap:8px;margin:16px 0 8px;width:100%;max-width:780px;flex-wrap:wrap}
+  .toggle-btn{padding:8px 16px;border-radius:8px;border:1px solid #333;background:#1a1a1a;color:#888;font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit}
+  .toggle-btn:hover{border-color:#555;color:#ccc}
+  .toggle-btn.active{background:#5DCAA5;color:#000;border-color:#5DCAA5;font-weight:600}
   .summary-cards{display:flex;gap:16px;margin-top:24px;width:100%;max-width:780px;flex-wrap:wrap}
   .card{flex:1;min-width:140px;background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:16px;text-align:center}
   .card-number{font-size:28px;font-weight:700;color:#5DCAA5}
+  .card-number.gap{color:#E87C6A}
   .card-label{font-size:12px;color:#666;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
   .top-states{margin-top:24px;width:100%;max-width:780px}
   .top-states h2{font-size:16px;font-weight:600;margin-bottom:12px;color:#ccc}
   .state-bar{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:13px}
   .state-bar-label{width:28px;font-weight:600;color:#5DCAA5}
   .state-bar-track{flex:1;height:24px;background:#1a1a1a;border-radius:6px;overflow:hidden;position:relative}
-  .state-bar-fill{height:100%;background:linear-gradient(90deg,#1D9E75,#5DCAA5);border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#000;min-width:fit-content}
+  .state-bar-fill{height:100%;background:linear-gradient(90deg,#1D9E75,#5DCAA5);border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#000;min-width:fit-content;white-space:nowrap}
+  .gap-section{margin-top:24px;width:100%;max-width:780px}
+  .gap-section h2{font-size:16px;font-weight:600;margin-bottom:12px;color:#E87C6A}
+  .gap-bar-label{width:28px;font-weight:600;color:#E87C6A}
+  .gap-bar-fill{height:100%;background:linear-gradient(90deg,#993320,#E87C6A);border-radius:6px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:#fff;min-width:fit-content;white-space:nowrap}
   .vivir-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;padding:6px 14px;background:#1a1a1a;border:1px solid #262626;border-radius:20px;font-size:12px;color:#5DCAA5;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+  .marker{pointer-events:none;transition:opacity .4s,r .4s}
+  .marker-label{pointer-events:none;transition:opacity .4s;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-weight:700;fill:#fff;text-anchor:middle;dominant-baseline:central}
   @media(max-width:600px){.summary-cards{flex-direction:column}.stats{margin-left:0;margin-top:8px}}
 </style>
 </head>
 <body>
 <div class="vivir-badge">Vivir Heritage</div>
 <h1>Designer outreach map</h1>
-<p class="subtitle">Flooring launch — target designers by state</p>
+<p class="subtitle">Flooring launch — target designers vs. population density</p>
+
+<div class="toggle-bar">
+  <button class="toggle-btn active" id="btn-overlay" onclick="setView('overlay')">Coverage + population</button>
+  <button class="toggle-btn" id="btn-coverage" onclick="setView('coverage')">Designer coverage</button>
+  <button class="toggle-btn" id="btn-population" onclick="setView('population')">Population heatmap</button>
+  <button class="toggle-btn" id="btn-gaps" onclick="setView('gaps')">Coverage gaps</button>
+</div>
 
 <div id="map-container">
   <svg id="map" width="100%" viewBox="0 0 780 500"></svg>
   <div id="tooltip"></div>
 </div>
 
-<div class="legend">
-  <span class="legend-item"><span class="legend-dot" style="background:#5DCAA5"></span> Represented</span>
-  <span class="legend-item"><span class="legend-dot" style="background:#1e1e1e;border:1px solid #333"></span> No coverage</span>
-  <span class="stats" id="total-stats"></span>
-</div>
+<div class="legend" id="legend"></div>
 
 <div class="summary-cards">
   <div class="card"><div class="card-number">36</div><div class="card-label">Designers</div></div>
-  <div class="card"><div class="card-number">15</div><div class="card-label">States</div></div>
+  <div class="card"><div class="card-number">15</div><div class="card-label">States covered</div></div>
   <div class="card"><div class="card-number">4.19M</div><div class="card-label">Total followers</div></div>
-  <div class="card"><div class="card-number">116K</div><div class="card-label">Avg per designer</div></div>
+  <div class="card"><div class="card-number gap">35</div><div class="card-label">States uncovered</div></div>
 </div>
 
 <div class="top-states">
@@ -64,10 +84,15 @@
   <div id="bars"></div>
 </div>
 
+<div class="gap-section">
+  <h2>Biggest coverage gaps — high population, zero designers</h2>
+  <div id="gap-bars"></div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
 <script>
-const stateData={
+var stateData={
   CA:{designers:7,followers:647300,names:["Morgan Mullen","Sarah Solis","Brooke Wagner","Ashley Ausland Interiors","Nicole Green Design House","Plaster And Patina","Jennifer Miller Studio"]},
   CT:{designers:1,followers:109000,names:["Becca Interiors"]},
   DC:{designers:1,followers:67800,names:["Liz Mearns Interior Design"]},
@@ -85,61 +110,249 @@ const stateData={
   UT:{designers:7,followers:949700,names:["Kimberly Parker Design","Steve Tiek Architects","W Design Collective","Andrea West Design","Killowen Construction","Split Rock Custom Homes","House West Design"]}
 };
 
-const stateNames={AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"};
+var statePop={AL:5108468,AK:733406,AZ:7431344,AR:3067732,CA:38965193,CO:5877610,CT:3617176,DE:1031890,DC:678972,FL:22610726,GA:11029227,HI:1435138,ID:1964726,IN:6862199,IA:3207004,IL:12549689,KS:2940546,KY:4526154,LA:4573749,ME:1395722,MD:6180253,MA:7001399,MI:10037261,MN:5737915,MS:2939690,MO:6196156,MT:1132812,NE:1978379,NV:3194176,NH:1402054,NJ:9290841,NM:2114371,NY:19571216,NC:10835491,ND:783926,OH:11785935,OK:4019800,OR:4233358,PA:12961683,RI:1095962,SC:5373555,SD:919318,TN:7126489,TX:30503301,UT:3417734,VT:647464,VA:8683619,WA:7812880,WV:1770071,WI:5910955,WY:584057};
 
-const fipsToState={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
+var stateNames={AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming"};
 
-const maxFollowers=Math.max(...Object.values(stateData).map(d=>d.followers));
-const w=780,h=500;
-const svg=d3.select('#map');
-const tip=document.getElementById('tooltip');
-const projection=d3.geoAlbersUsa().scale(1000).translate([w/2,h/2]);
-const path=d3.geoPath().projection(projection);
+var fipsToState={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
 
-function followerColor(f){
-  const t=f/maxFollowers;
+var maxPop=Math.max.apply(null,Object.values(statePop));
+var maxFollowers=Math.max.apply(null,Object.values(stateData).map(function(d){return d.followers}));
+
+var currentView='overlay';
+var statesSelection=null;
+var markersGroup=null;
+var labelsGroup=null;
+
+function popColor(pop){
+  var t=pop/maxPop;
+  if(t>.6)return '#7B5EA7';
+  if(t>.3)return '#9B7EC4';
+  if(t>.15)return '#B89DD8';
+  if(t>.05)return '#D4BEE8';
+  return '#EDE4F5';
+}
+
+function coverageColor(f){
+  var t=f/maxFollowers;
   if(t>.7)return '#1D9E75';
   if(t>.4)return '#3DAF8A';
   if(t>.15)return '#5DCAA5';
   return '#85D8BA';
 }
 
-d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(us=>{
-  const states=topojson.feature(us,us.objects.states).features;
-  svg.selectAll('.state').data(states).enter().append('path')
-    .attr('class',d=>{const ab=fipsToState[d.id];return 'state'+(stateData[ab]?' state-active':'')})
+function gapColor(ab){
+  if(stateData[ab])return '#1D9E75';
+  var pop=statePop[ab]||0;
+  var t=pop/maxPop;
+  if(t>.3)return '#C0392B';
+  if(t>.15)return '#D4644A';
+  if(t>.05)return '#E8967E';
+  return '#1e1e1e';
+}
+
+function getFill(ab){
+  if(currentView==='overlay'){
+    return popColor(statePop[ab]||0);
+  }else if(currentView==='coverage'){
+    return stateData[ab]?coverageColor(stateData[ab].followers):'#1e1e1e';
+  }else if(currentView==='population'){
+    return popColor(statePop[ab]||0);
+  }else{
+    return gapColor(ab);
+  }
+}
+
+function getStroke(ab){
+  if(currentView==='overlay'&&stateData[ab]){
+    return '#5DCAA5';
+  }
+  return '#333';
+}
+
+function getStrokeWidth(ab){
+  if(currentView==='overlay'&&stateData[ab]){
+    return 2;
+  }
+  return 0.5;
+}
+
+function markerRadius(followers){
+  var minR=6,maxR=22;
+  var t=Math.sqrt(followers/maxFollowers);
+  return minR+t*(maxR-minR);
+}
+
+function showMarkers(){
+  return currentView==='overlay';
+}
+
+function getTooltip(ab){
+  var name=stateNames[ab]||ab;
+  var pop=statePop[ab]||0;
+  var d=stateData[ab];
+
+  if(currentView==='overlay'){
+    var html='<div class="tt-state" style="color:#C4A6E8">'+name+'</div><div class="tt-pop">Population: '+pop.toLocaleString()+'</div>';
+    if(d){
+      html+='<div class="tt-designer" style="margin-top:6px">'+d.designers+' designer'+(d.designers>1?'s':'')+' · '+d.followers.toLocaleString()+' followers</div><div class="tt-names">'+d.names.join(', ')+'</div>';
+    }else if(pop>3000000){
+      html+='<div class="tt-gap" style="margin-top:6px">No designer coverage — high opportunity</div>';
+    }else{
+      html+='<div class="tt-gap" style="margin-top:6px">No designer coverage</div>';
+    }
+    return html;
+  }else if(currentView==='coverage'){
+    if(!d)return null;
+    return '<div class="tt-state" style="color:#5DCAA5">'+name+'</div><div class="tt-count">'+d.designers+' designer'+(d.designers>1?'s':'')+' · '+d.followers.toLocaleString()+' followers</div><div class="tt-pop">Population: '+pop.toLocaleString()+'</div><div class="tt-names">'+d.names.join(', ')+'</div>';
+  }else if(currentView==='population'){
+    var html='<div class="tt-state" style="color:#C4A6E8">'+name+'</div><div class="tt-pop">Population: '+pop.toLocaleString()+'</div>';
+    if(d){
+      html+='<div class="tt-designer">'+d.designers+' designer'+(d.designers>1?'s':'')+' · '+d.followers.toLocaleString()+' followers</div>';
+    }else{
+      html+='<div class="tt-gap">No designer coverage</div>';
+    }
+    return html;
+  }else{
+    var html='<div class="tt-state" style="color:'+(d?'#5DCAA5':'#E87C6A')+'">'+name+'</div><div class="tt-pop">Population: '+pop.toLocaleString()+'</div>';
+    if(d){
+      html+='<div class="tt-designer">'+d.designers+' designer'+(d.designers>1?'s':'')+' — covered</div>';
+    }else if(pop>2000000){
+      html+='<div class="tt-gap">High-priority gap — '+(pop/1000000).toFixed(1)+'M people, zero designers</div>';
+    }else{
+      html+='<div class="tt-gap">No coverage</div>';
+    }
+    return html;
+  }
+}
+
+function updateLegend(){
+  var el=document.getElementById('legend');
+  if(currentView==='overlay'){
+    el.innerHTML='<div class="legend-section"><div class="legend-section-title">Population</div><div class="legend-row"><span class="legend-gradient" style="background:linear-gradient(90deg,#EDE4F5,#D4BEE8,#B89DD8,#9B7EC4,#7B5EA7)"></span> Low → High</div></div><div class="legend-section"><div class="legend-section-title">Designer coverage</div><div class="legend-row"><span class="legend-circle" style="background:#1D9E75;border:2px solid #5DCAA5"></span> Has designers (size = followers)</div><div class="legend-row"><span class="legend-dot" style="background:transparent;border:2px solid #5DCAA5"></span> State border = covered</div></div><span class="stats">36 designers · 15 states · 4.19M followers</span>';
+  }else if(currentView==='coverage'){
+    el.innerHTML='<div class="legend-section"><div class="legend-section-title">Designer coverage</div><div class="legend-row"><span class="legend-dot" style="background:#5DCAA5"></span> Has designers</div><div class="legend-row"><span class="legend-dot" style="background:#1e1e1e;border:1px solid #333"></span> No coverage</div></div><span class="stats">36 designers · 15 states · 4.19M followers</span>';
+  }else if(currentView==='population'){
+    el.innerHTML='<div class="legend-section"><div class="legend-section-title">Population</div><div class="legend-row"><span class="legend-gradient" style="background:linear-gradient(90deg,#EDE4F5,#D4BEE8,#B89DD8,#9B7EC4,#7B5EA7)"></span> Low → High</div></div><span class="stats">Hover any state for details</span>';
+  }else{
+    el.innerHTML='<div class="legend-section"><div class="legend-section-title">Coverage gaps</div><div class="legend-row"><span class="legend-dot" style="background:#1D9E75"></span> Covered</div><div class="legend-row"><span class="legend-dot" style="background:#C0392B"></span> High-pop, no coverage</div><div class="legend-row"><span class="legend-dot" style="background:#E8967E"></span> Med-pop, no coverage</div><div class="legend-row"><span class="legend-dot" style="background:#1e1e1e;border:1px solid #333"></span> Low priority</div></div><span class="stats">Red = biggest missed opportunities</span>';
+  }
+}
+
+function updateMarkers(){
+  var show=showMarkers();
+  markersGroup.selectAll('.marker').transition().duration(400)
+    .attr('opacity',show?0.9:0)
+    .attr('r',function(d){return show?markerRadius(d.followers):0});
+  labelsGroup.selectAll('.marker-label').transition().duration(400)
+    .attr('opacity',show?1:0);
+}
+
+function setView(view){
+  currentView=view;
+  document.querySelectorAll('.toggle-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('btn-'+view).classList.add('active');
+  if(statesSelection){
+    statesSelection.transition().duration(400)
+      .attr('fill',function(d){var ab=fipsToState[d.id];return getFill(ab)})
+      .attr('stroke',function(d){var ab=fipsToState[d.id];return getStroke(ab)})
+      .attr('stroke-width',function(d){var ab=fipsToState[d.id];return getStrokeWidth(ab)});
+  }
+  updateMarkers();
+  updateLegend();
+}
+
+var w=780,h=500;
+var svg=d3.select('#map');
+var tip=document.getElementById('tooltip');
+var projection=d3.geoAlbersUsa().scale(1000).translate([w/2,h/2]);
+var path=d3.geoPath().projection(projection);
+
+d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(us){
+  var states=topojson.feature(us,us.objects.states).features;
+
+  var centroids={};
+  states.forEach(function(f){
+    var ab=fipsToState[f.id];
+    if(ab){
+      var c=path.centroid(f);
+      if(c&&!isNaN(c[0]))centroids[ab]=c;
+    }
+  });
+
+  statesSelection=svg.selectAll('.state').data(states).enter().append('path')
+    .attr('class','state state-active')
     .attr('d',path)
-    .attr('fill',d=>{const ab=fipsToState[d.id];return stateData[ab]?followerColor(stateData[ab].followers):'#1e1e1e'})
-    .on('mouseenter',(e,d)=>{
-      const ab=fipsToState[d.id];
-      if(!stateData[ab])return;
-      const s=stateData[ab];
-      tip.innerHTML=`<div class="tt-state">${stateNames[ab]||ab}</div><div class="tt-count">${s.designers} designer${s.designers>1?'s':''} · ${s.followers.toLocaleString()} followers</div><div class="tt-names">${s.names.join(', ')}</div>`;
+    .attr('fill',function(d){var ab=fipsToState[d.id];return getFill(ab)})
+    .attr('stroke',function(d){var ab=fipsToState[d.id];return getStroke(ab)})
+    .attr('stroke-width',function(d){var ab=fipsToState[d.id];return getStrokeWidth(ab)})
+    .on('mouseenter',function(e,d){
+      var ab=fipsToState[d.id];
+      var html=getTooltip(ab);
+      if(!html)return;
+      tip.innerHTML=html;
       tip.style.display='block';
     })
-    .on('mousemove',e=>{
-      const rect=document.getElementById('map-container').getBoundingClientRect();
-      let left=e.clientX-rect.left+14;
-      let top=e.clientY-rect.top-10;
-      if(left+260>rect.width)left=e.clientX-rect.left-270;
+    .on('mousemove',function(e){
+      var rect=document.getElementById('map-container').getBoundingClientRect();
+      var left=e.clientX-rect.left+14;
+      var top=e.clientY-rect.top-10;
+      if(left+280>rect.width)left=e.clientX-rect.left-290;
       tip.style.left=left+'px';
       tip.style.top=top+'px';
     })
-    .on('mouseleave',()=>{tip.style.display='none'});
+    .on('mouseleave',function(){tip.style.display='none'});
 
   svg.append('path')
-    .datum(topojson.mesh(us,us.objects.states,(a,b)=>a!==b))
+    .datum(topojson.mesh(us,us.objects.states,function(a,b){return a!==b}))
     .attr('fill','none').attr('stroke','#333').attr('stroke-width',0.5).attr('d',path);
+
+  var markerData=Object.entries(stateData).filter(function(e){return centroids[e[0]]}).map(function(e){
+    return {ab:e[0],designers:e[1].designers,followers:e[1].followers,cx:centroids[e[0]][0],cy:centroids[e[0]][1]};
+  });
+
+  markersGroup=svg.append('g');
+  labelsGroup=svg.append('g');
+
+  markersGroup.selectAll('.marker').data(markerData).enter().append('circle')
+    .attr('class','marker')
+    .attr('cx',function(d){return d.cx})
+    .attr('cy',function(d){return d.cy})
+    .attr('r',function(d){return markerRadius(d.followers)})
+    .attr('fill','#1D9E75')
+    .attr('stroke','#5DCAA5')
+    .attr('stroke-width',2)
+    .attr('opacity',0.9);
+
+  labelsGroup.selectAll('.marker-label').data(markerData).enter().append('text')
+    .attr('class','marker-label')
+    .attr('x',function(d){return d.cx})
+    .attr('y',function(d){return d.cy})
+    .attr('font-size',function(d){return d.designers>=5?'11px':'10px'})
+    .text(function(d){return d.designers});
+
+  updateLegend();
 });
 
-const sorted=Object.entries(stateData).sort((a,b)=>b[1].followers-a[1].followers);
-const barsEl=document.getElementById('bars');
-sorted.forEach(([ab,d])=>{
-  const pct=(d.followers/maxFollowers*100).toFixed(0);
-  barsEl.innerHTML+=`<div class="state-bar"><span class="state-bar-label">${ab}</span><div class="state-bar-track"><div class="state-bar-fill" style="width:${pct}%">${d.followers.toLocaleString()} · ${d.designers} designer${d.designers>1?'s':''}</div></div></div>`;
+var sorted=Object.entries(stateData).sort(function(a,b){return b[1].followers-a[1].followers});
+var barsEl=document.getElementById('bars');
+sorted.forEach(function(item){
+  var ab=item[0],d=item[1];
+  var pct=(d.followers/maxFollowers*100).toFixed(0);
+  barsEl.innerHTML+='<div class="state-bar"><span class="state-bar-label">'+ab+'</span><div class="state-bar-track"><div class="state-bar-fill" style="width:'+pct+'%">'+d.followers.toLocaleString()+' · '+d.designers+' designer'+(d.designers>1?'s':'')+'</div></div></div>';
 });
 
-document.getElementById('total-stats').textContent='36 designers · 15 states · 4.19M followers';
+var gaps=Object.entries(statePop)
+  .filter(function(item){return !stateData[item[0]]&&item[0]!=='AK'&&item[0]!=='HI'})
+  .sort(function(a,b){return b[1]-a[1]})
+  .slice(0,10);
+var maxGapPop=gaps[0][1];
+var gapBarsEl=document.getElementById('gap-bars');
+gaps.forEach(function(item){
+  var ab=item[0],pop=item[1];
+  var pct=(pop/maxGapPop*100).toFixed(0);
+  gapBarsEl.innerHTML+='<div class="state-bar"><span class="gap-bar-label">'+ab+'</span><div class="state-bar-track"><div class="gap-bar-fill" style="width:'+pct+'%">'+(pop/1000000).toFixed(1)+'M people · 0 designers</div></div></div>';
+});
 </script>
 </body>
 </html>
